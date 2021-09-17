@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewData["Title"] = "FizzBuzz";
+}
+
+<script type="text/javascript">
+
+    function onClickToCalculateFizzBuzz() {
+        var InputArray = $('#InputText').val().split(",");
+        $('#FizzBuzzOutput').text('');
+        $.ajax({
+            type: 'POST',
+            async: false,
+            traditional: true,
+            url: '/FizzBuzz/OnSubmitCalculateFizzBuzz',
+            success: function (data) {
+                $.each(data, function (index, value) {
+                    $('#FizzBuzzOutput').append('<p>' + value + '</p>');
+                });
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert('Error occured in Controller/Action - FizzBuzz/OnSubmitCalculateFizzBuzz' + " - " + errorThrown);
+            },
+            data: { 'inputArray': InputArray }
+        });
+    }
+
+</script>
+
+<h2>FizzBuzz</h2>
+<hr />
+<label id="lblFizzBuzzInput" for="InputText" title="">Input Characters with Comma Seperated</label>
+<input id="InputText" type="text" />
+<input id="BtnSubmitToCalcFizzBuzz" type="button" value="Submit" onclick="onClickToCalculateFizzBuzz()" />
+<hr />
+<label id="lblFizzBuzzOutput" title="Output">Output</label>
+<div id="FizzBuzzOutput"></div>
